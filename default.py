@@ -1,20 +1,20 @@
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin,os,sys,xbmcvfs
 import shutil
-import urllib2,urllib
+import urllib.parse
 import re
 
 addon_id = 'plugin.close.kodi'
 ADDON = xbmcaddon.Addon(id=addon_id)
-FANART = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id , 'fanart.jpg'))
-ICON = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id, 'icon.png'))
-ART = xbmc.translatePath(os.path.join('special://home/addons/' + addon_id + '/resources/art/'))
-VERSION = "3.0.0"
+FANART = xbmcvfs.translatePath(os.path.join('special://home/addons/' + addon_id , 'fanart.jpg'))
+ICON = xbmcvfs.translatePath(os.path.join('special://home/addons/' + addon_id, 'icon.png'))
+ART = xbmcvfs.translatePath(os.path.join('special://home/addons/' + addon_id + '/resources/art/'))
+VERSION = "4.0.0"
 PATH = "forceclose"            
 BASE = "fclose"
 DIALOG         = xbmcgui.Dialog()
 COLOR1         = 'red'
 COLOR2         = 'white'
-log            = xbmc.translatePath('special://logpath/')
+log            = xbmcvfs.translatePath('special://logpath/')
 
 
 
@@ -23,7 +23,7 @@ log            = xbmc.translatePath('special://logpath/')
 ###################################
 #
 def flawless():
-	choice = DIALOG.yesno('Close System', '[COLOR %s]You are about to close The Media Center' % COLOR2, 'Would you like to continue?[/COLOR]', nolabel='[B][COLOR red] No Cancel[/COLOR][/B]',yeslabel='[B][COLOR green]Yes Close[/COLOR][/B]')
+	choice = DIALOG.yesno('Close System', '[COLOR %s]You are about to close The Media Center. Would you like to continue?[/COLOR]' % COLOR2, nolabel='[B][COLOR red] No Cancel[/COLOR][/B]', yeslabel='[B][COLOR green]Yes Close[/COLOR][/B]')
 	if choice == 1:
 		os._exit(1)
 	else:
@@ -36,21 +36,21 @@ def flawless():
 def oldmeth():
     dialog = xbmcgui.Dialog()
     choice = 1
-    choice = DIALOG.yesno('Close System', '[COLOR %s]You are about to close The Entertainment Center' % COLOR2, 'Would you like to continue?[/COLOR]', nolabel='[B][COLOR red] No Cancel[/COLOR][/B]',yeslabel='[B][COLOR green]Yes Close[/COLOR][/B]')
+    choice = DIALOG.yesno('Close System', '[COLOR %s]You are about to close The Entertainment Center. Would you like to continue?[/COLOR]' % COLOR2, nolabel='[B][COLOR red] No Cancel[/COLOR][/B]',yeslabel='[B][COLOR green]Yes Close[/COLOR][/B]')
     if choice == 0:
         xbmc.executebuiltin("Action(Close)")
         return
     elif choice == 1:
         pass
-    log_path = xbmc.translatePath('special://logpath')
+    log_path = xbmcvfs.translatePath('special://logpath')
     if xbmc.getCondVisibility('system.platform.android'):
-        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep com.sempermax.spmc16 | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep com.sempermax.spmc16 | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep com.sempermax.spmc | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep com.sempermax.spmc | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print($2) }")')
         except: pass             
         #
 
@@ -78,13 +78,13 @@ def oldmeth():
         except: pass
         #
     if xbmc.getCondVisibility('system.platform.ios'):
-        print 'ios'
+        print('ios')
         #
     if xbmc.getCondVisibility('system.platform.atv2'):
         try: os.system('killall AppleTV')
         except: pass
         #
-        print "############   try raspbmc force close  #################" #OSMC / Raspbmc
+        print("############   try raspbmc force close  #################") #OSMC / Raspbmc
         try: os.system('sudo initctl stop kodi')
         except: pass
         try: os.system('sudo initctl stop xbmc')
@@ -95,7 +95,7 @@ def oldmeth():
         except: pass
         #
     else:
-        print "############   try raspbmc force close  #################" #OSMC / Raspbmc
+        print("############   try raspbmc force close  #################") #OSMC / Raspbmc
         try: os.system('sudo initctl stop kodi')
         except: pass
         try: os.system('sudo initctl stop xbmc')
@@ -112,13 +112,13 @@ def oldmeth():
 
 def omfci():
     if xbmc.getCondVisibility('system.platform.android'):
-        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep com.sempermax.spmc16 | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep com.sempermax.spmc16 | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep com.sempermax.spmc | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep com.sempermax.spmc | busybox awk "{ print($2) }")')
         except: pass
-        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print $2 }")')
+        try: os.system('kill $(ps | busybox grep org.xbmc.kodi | busybox awk "{ print($2) }")')
         except: pass             
         #
 
@@ -146,13 +146,13 @@ def omfci():
         except: pass
         #
     if xbmc.getCondVisibility('system.platform.ios'):
-        print 'ios'
+        print('ios')
         #
     if xbmc.getCondVisibility('system.platform.atv2'):
         try: os.system('killall AppleTV')
         except: pass
         #
-        print "############   try raspbmc force close  #################" #OSMC / Raspbmc
+        print("############   try raspbmc force close  #################") #OSMC / Raspbmc
         try: os.system('sudo initctl stop kodi')
         except: pass
         try: os.system('sudo initctl stop xbmc')
@@ -163,7 +163,7 @@ def omfci():
         except: pass
         #
     else:
-        print "############   try raspbmc force close  #################" #OSMC / Raspbmc
+        print("############   try raspbmc force close  #################") #OSMC / Raspbmc
         try: os.system('sudo initctl stop kodi')
         except: pass
         try: os.system('sudo initctl stop xbmc')
@@ -206,9 +206,10 @@ def get_params():
     
 
 def addDir(name,url,mode,iconimage,fanart,description):
-        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&fanart="+urllib.quote_plus(fanart)+"&description="+urllib.quote_plus(description)
+        u=sys.argv[0]+"?url="+urllib.parse.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.parse.quote_plus(name)+"&iconimage="+urllib.parse.quote_plus(iconimage)+"&fanart="+urllib.parse.quote_plus(fanart)+"&description="+urllib.parse.quote_plus(description)
         ok=True
-        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+        liz=xbmcgui.ListItem(name)
+	liz.setArt({"icon": "DefaultFolder.png", "thumb": "DefaultFolder.png"})
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": description } )
         liz.setProperty( "Fanart_Image", fanart )
         if mode==90 :
@@ -235,15 +236,15 @@ description=None
 ##########################################
 	
 try:
-        url=urllib.unquote_plus(params["url"])
+        url=urllib.parse.unquote_plus(params["url"])
 except:
         pass
 try:
-        name=urllib.unquote_plus(params["name"])
+        name=urllib.parse.unquote_plus(params["name"])
 except:
         pass
 try:
-        iconimage=urllib.unquote_plus(params["iconimage"])
+        iconimage=urllib.parse.unquote_plus(params["iconimage"])
 except:
         pass
 try:        
@@ -251,20 +252,20 @@ try:
 except:
         pass
 try:        
-        fanart=urllib.unquote_plus(params["fanart"])
+        fanart=urllib.parse.unquote_plus(params["fanart"])
 except:
         pass
 try:        
-        description=urllib.unquote_plus(params["description"])
+        description=urllib.parse.unquote_plus(params["description"])
 except:
         pass
         
         
-print str(PATH)+': '+str(VERSION)
-print "Mode: "+str(mode)
-print "URL: "+str(url)
-print "Name: "+str(name)
-print "IconImage: "+str(iconimage)
+print(str(PATH)+': '+str(VERSION))
+print("Mode: "+str(mode))
+print("URL: "+str(url))
+print("Name: "+str(name))
+print("IconImage: "+str(iconimage))
 
 
 def setView(content, viewType):
