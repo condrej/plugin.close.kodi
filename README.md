@@ -2,7 +2,9 @@
 A Force Close addon 
 
 This is a fork of Based-Skid's force close plugin converted for python3.
-I am in no way a python developer, but the few changes I made seem to work.
+
+I am in no way a python developer, but the few changes I made seem to work well in Kodi v20.5
+
 
 Contains Code inspired by @Surfacingx The Creator of the Aftermath Wizard
 
