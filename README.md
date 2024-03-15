@@ -1,6 +1,9 @@
 # plugin.close.kodi
 A Force Close addon 
 
+This is a fork of Based-Skid's force close plugin converted for python3.
+I am in no way a python developer, but the few changes I made seem to work.
+
 Contains Code inspired by @Surfacingx The Creator of the Aftermath Wizard
 
 Also Contains Code From a Freaktab Dev I dont Remember who but IF they want to come forward I will add your credits (Android Force 
